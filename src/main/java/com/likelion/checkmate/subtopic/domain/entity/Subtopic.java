@@ -1,7 +1,10 @@
 package com.likelion.checkmate.subtopic.domain.entity;
 
 import com.likelion.checkmate.common.BaseEntity;
+import com.likelion.checkmate.hashtag.domain.entity.Hashtag;
 import com.likelion.checkmate.item.domain.entity.Item;
+import com.likelion.checkmate.post.application.dto.PostDto;
+import com.likelion.checkmate.post.domain.entity.Post;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -23,6 +26,20 @@ public class Subtopic extends BaseEntity {
 
     private String name;
 
-    @OneToOne(mappedBy = "subtopic")
+    @OneToOne
     private Item item;
+
+    public Subtopic update(String text, Item item) {
+        return Subtopic.builder()
+                .name(text)
+                .item(item)
+                .build();
+    }
+
+    public static Subtopic toEntity(String name, Item item) {
+        return Subtopic.builder()
+                .name(name)
+                .item(item)
+                .build();
+    }
 }
