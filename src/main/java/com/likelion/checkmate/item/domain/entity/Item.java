@@ -1,6 +1,7 @@
 package com.likelion.checkmate.item.domain.entity;
 
 import com.likelion.checkmate.common.BaseEntity;
+import com.likelion.checkmate.post.application.dto.PostDto;
 import com.likelion.checkmate.post.domain.entity.Post;
 import com.likelion.checkmate.subtopic.domain.entity.Subtopic;
 import lombok.*;
@@ -28,7 +29,21 @@ public class Item extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
-    @OneToOne
-    private Subtopic subtopic;
+
+
+    public Item update(String content, int count, Post post) {
+        return Item.builder()
+                .content(content)
+                .count(count)
+                .post(post)
+                .build();
+    }
+    public static Item toEntity(String content, int count, Post post) {
+        return Item.builder()
+                .content(content)
+                .count(count)
+                .post(post)
+                .build();
+    }
 
 }
