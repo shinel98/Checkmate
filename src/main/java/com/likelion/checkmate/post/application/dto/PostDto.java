@@ -3,6 +3,7 @@ package com.likelion.checkmate.post.application.dto;
 import com.likelion.checkmate.post.presentation.request.PostRequest;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
