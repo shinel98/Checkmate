@@ -23,9 +23,10 @@ public class PostController {
         Long id = postService.update(PostDto.toDto(request));
         return ResponseEntity.ok(id);
     }
-    @GetMapping("/post/{postId}")
-    public ResponseEntity<PostDetailsResponse> OneDetailPost(@PathVariable Long postId) {
-        Post post = postService.OneDetailPost(postId);
-        return ResponseEntity.ok(PostDetailsResponse.from(post));
-    }
+//    @GetMapping("/post/{postId}")
+//    public ResponseEntity<PostDetailsResponse> OneDetailPost(@PathVariable Long postId) {
+//        Post post = postService.OneDetailPost(postId);
+//        return ResponseEntity.ok(PostDetailsResponse.from(post));
+//    }
+
 }
