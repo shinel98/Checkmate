@@ -25,6 +25,8 @@ public class Item extends BaseEntity {
 
     private String content;
     private int count;
+    private String category;
+    private String name; // 확인
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;

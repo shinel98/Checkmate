@@ -3,6 +3,7 @@ package com.likelion.checkmate.post.application.dto;
 import com.likelion.checkmate.post.presentation.request.PostRequest;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,6 +18,7 @@ public class PostDto {
     private int scope;
     private List<String> hashtags;
     private List<PostRequest.ContentData> content;
+    private LocalDateTime created_time;
 
     public static PostDto toDto(PostRequest request) {
         return PostDto.builder()

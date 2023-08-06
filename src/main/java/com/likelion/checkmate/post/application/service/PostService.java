@@ -11,9 +11,11 @@ import com.likelion.checkmate.post.presentation.request.PostRequest;
 import com.likelion.checkmate.subtopic.domain.entity.Subtopic;
 import com.likelion.checkmate.subtopic.domain.repository.SubtopicRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +25,7 @@ public class PostService {
     private final HashtagRepository hashtagRepository;
     private final ItemRepository itemRepository;
     private final SubtopicRepository subtopicRepository;
+
 
     @Transactional
     public Long update(PostDto dto) {
@@ -54,5 +57,11 @@ public class PostService {
         return post.getId();
     }
 
+    @Transactional
+    public Post OneDetailPost(Long postId){
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("no such post"));
+        return post;
+    }
 
 }
+
