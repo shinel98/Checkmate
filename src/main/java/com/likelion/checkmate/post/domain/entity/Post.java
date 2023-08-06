@@ -7,6 +7,7 @@ import com.likelion.checkmate.report.domain.entity.Report;
 import com.likelion.checkmate.together.domain.entity.Together;
 import com.likelion.checkmate.user.domain.entity.User;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -30,6 +31,8 @@ public class Post extends BaseEntity {
     private String title;
 
     private int scope;
+    @ColumnDefault("false")
+    private boolean have;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Together> togetherList = new ArrayList<>();

@@ -10,18 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class PostController {
     private final PostService postService;
 
-    @PostMapping("/post/time")
+    @PatchMapping("/post")
     public ResponseEntity<Long> edit(@RequestBody PostRequest request) {
         Long id = postService.update(PostDto.toDto(request));
         return ResponseEntity.ok(id);
     }
-
 }
