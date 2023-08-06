@@ -21,4 +21,10 @@ public class PostController {
         Long id = postService.update(PostDto.toDto(request));
         return ResponseEntity.ok(id);
     }
+
+    @DeleteMapping("/post")
+    public ResponseEntity<Void> deleteById (@RequestParam Long userId, @RequestParam Long postId) {
+        postService.deletePost(userId, postId);
+        return ResponseEntity.ok(null);
+    }
 }

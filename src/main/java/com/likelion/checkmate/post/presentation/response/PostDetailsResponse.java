@@ -37,18 +37,4 @@ public class PostDetailsResponse {
         private int count;
 
     }
-
-    public static PostDetailsResponse from(Post post) {
-        return PostDetailsResponse.builder()
-                .postId(post.getId())
-                .title(post.getTitle())
-                .hashtags(post.getHashtagList().stream()
-                        .map(Hashtag::getName)
-                        .collect(Collectors.toList()))
-                .date(post.getRegDate())
-                .together(post.getTogetherList().size())
-//                .get()
-                .writer(post.getUser().getName())
-                .build();
-    }
 }

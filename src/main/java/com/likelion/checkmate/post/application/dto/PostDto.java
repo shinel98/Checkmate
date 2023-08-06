@@ -18,7 +18,6 @@ public class PostDto {
     private int scope;
     private List<String> hashtags;
     private List<PostRequest.ContentData> content;
-    private LocalDateTime created_time;
 
     public static PostDto toDto(PostRequest request) {
         return PostDto.builder()

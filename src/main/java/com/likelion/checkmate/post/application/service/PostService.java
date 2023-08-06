@@ -58,10 +58,9 @@ public class PostService {
     }
 
     @Transactional
-    public Post OneDetailPost(Long postId){
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("no such post"));
-        return post;
+    public void deletePost (Long postId, Long userId) {
+        Post post = postRepository.findByIdAndUserId(postId, userId);
+        postRepository.deleteById(postId);
     }
-
 }
 
