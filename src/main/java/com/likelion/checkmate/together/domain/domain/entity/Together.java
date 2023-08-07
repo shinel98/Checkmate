@@ -1,4 +1,4 @@
-package com.likelion.checkmate.together.domain.entity;
+package com.likelion.checkmate.together.domain.domain.entity;
 
 import com.likelion.checkmate.common.BaseEntity;
 import com.likelion.checkmate.post.domain.entity.Post;
