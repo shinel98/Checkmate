@@ -4,7 +4,7 @@ import com.likelion.checkmate.common.BaseEntity;
 import com.likelion.checkmate.hashtag.domain.entity.Hashtag;
 import com.likelion.checkmate.item.domain.entity.Item;
 import com.likelion.checkmate.report.domain.entity.Report;
-import com.likelion.checkmate.together.domain.domain.entity.Together;
+import com.likelion.checkmate.together.domain.entity.Together;
 import com.likelion.checkmate.user.domain.entity.User;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

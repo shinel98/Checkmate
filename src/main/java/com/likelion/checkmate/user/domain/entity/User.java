@@ -3,7 +3,7 @@ package com.likelion.checkmate.user.domain.entity;
 import com.likelion.checkmate.common.BaseEntity;
 import com.likelion.checkmate.follow.domain.entity.Follow;
 import com.likelion.checkmate.post.domain.entity.Post;
-import com.likelion.checkmate.together.domain.domain.entity.Together;
+import com.likelion.checkmate.together.domain.entity.Together;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;

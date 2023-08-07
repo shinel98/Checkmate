@@ -1,8 +1,8 @@
-package com.likelion.checkmate.together.domain.application;
+package com.likelion.checkmate.together.application.service;
 
 
-import com.likelion.checkmate.together.domain.domain.entity.Together;
-import com.likelion.checkmate.together.domain.domain.repository.TogetherRepository;
+import com.likelion.checkmate.together.domain.entity.Together;
+import com.likelion.checkmate.together.domain.repository.TogetherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
