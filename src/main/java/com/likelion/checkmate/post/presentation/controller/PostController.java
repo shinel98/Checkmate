@@ -3,8 +3,6 @@ package com.likelion.checkmate.post.presentation.controller;
 
 import com.likelion.checkmate.post.application.dto.PostDto;
 import com.likelion.checkmate.post.application.service.PostService;
-import com.likelion.checkmate.post.domain.entity.Post;
-import com.likelion.checkmate.post.presentation.response.PostDetailsResponse;
 import com.likelion.checkmate.post.presentation.request.PostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,4 +25,5 @@ public class PostController {
         postService.deletePost(userId, postId);
         return ResponseEntity.ok(null);
     }
+
 }
