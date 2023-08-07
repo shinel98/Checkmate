@@ -1,6 +1,6 @@
-package com.likelion.checkmate.together.domain.presentation;
+package com.likelion.checkmate.together.presentation;
 
-import com.likelion.checkmate.together.domain.application.TogetherService;
+import com.likelion.checkmate.together.application.service.TogetherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
