@@ -15,16 +15,17 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p " +
             "FROM Post p " +
-            "JOIN Have h ON p.id = h.post.id " +
+            "LEFT JOIN Have h ON p.id = h.post.id " +
             "GROUP BY p.id, p.title, p.scope " +
-            "ORDER BY COUNT(h.post.id) DESC")
+            "ORDER BY COUNT(h.post.id) DESC, p.id ASC")
     List<Post> findPostsByMostCountedHave();
-//    @Query("SELECT p FROM Post p WHERE p.scope = 3 ORDER BY p. DESC")
-//    List<Post> findAllOrderByRegDateDesc();
 
-//    @Query("SELECT COUNT(p) FROM Post p WHERE p.id = :postId AND p.deleted = false ")
-//    int findAllGetPost(Long postId);
-
+    @Query("SELECT p " +
+            "FROM Post p " +
+            "LEFT JOIN Together t ON p.id = t.post.id " +
+            "GROUP BY p.id, p.title, p.scope " +
+            "ORDER BY COUNT(t.post.id) DESC, p.id ASC")
+    List<Post> findPostsByMostCountedTogether();
 
 
 }

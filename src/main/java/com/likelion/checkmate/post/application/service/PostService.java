@@ -92,6 +92,21 @@ public class PostService {
         System.out.println("postHomeDtoList = " + postHomeDtoList);
         return postHomeDtoList;
     }
+
+    @Transactional
+    public List<PostHomeDto> getPostListByTogether() {
+        List<Post> postList = postRepository.findPostsByMostCountedTogether();
+        System.out.println("postList = " + postList);
+
+        List<PostHomeDto> postHomeDtoList = postList.stream()
+                .map(post -> {
+                    int count = haveRepository.findAllGetPost(post.getId());
+                    return PostHomeDto.toDto(post, count);
+                })
+                .collect(Collectors.toList());
+        System.out.println("postHomeDtoList = " + postHomeDtoList);
+        return postHomeDtoList;
+    }
     @Transactional
     public void deletePost (Long postId, Long userId) {
         Post post = postRepository.findByIdAndUserId(postId, userId);
