@@ -26,7 +26,6 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "deleted = false")
 @SQLDelete(sql = "UPDATE post SET deleted = true WHERE id = ?")
-@ToString
 public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

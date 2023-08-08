@@ -21,4 +21,6 @@ public class UserController {
         userService.changeUserInfo(userDto.getId(), userDto.getNickname());
         return ResponseEntity.ok().build();
     }
+
+    
 }

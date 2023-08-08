@@ -32,8 +32,11 @@ public class User extends BaseEntity {
     private String email;
     private String image;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Follow> followList = new ArrayList<>();
+    @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followingList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Follow> followerList = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Together> togetherList = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
