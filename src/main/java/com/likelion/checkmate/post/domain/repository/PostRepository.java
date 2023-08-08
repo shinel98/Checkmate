@@ -13,6 +13,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.scope = 3 ORDER BY p.uploadDate DESC")
     List<Post> findAllOrderByRegDateDesc();
 
+    @Query("SELECT p " +
+            "FROM Post p " +
+            "JOIN Have h ON p.id = h.post.id " +
+            "GROUP BY p.id, p.title, p.scope " +
+            "ORDER BY COUNT(h.post.id) DESC")
+    List<Post> findPostsByMostCountedHave();
 //    @Query("SELECT p FROM Post p WHERE p.scope = 3 ORDER BY p. DESC")
 //    List<Post> findAllOrderByRegDateDesc();
 

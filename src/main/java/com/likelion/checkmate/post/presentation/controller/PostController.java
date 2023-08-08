@@ -30,8 +30,8 @@ public class PostController {
     }
 
 
-//    @GetMapping("/post/get")
-//    public ResponseEntity<List<PostHomeDto>> getPostListByTime() {
-//        return ResponseEntity.ok(postService.getPostListByHave());
-//    }
+    @GetMapping("/post/get")
+    public ResponseEntity<List<PostHomeDto>> getPostListByHave() {
+        return ResponseEntity.ok(postService.getPostListByHave());
+    }
 }

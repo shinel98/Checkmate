@@ -26,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "deleted = false")
 @SQLDelete(sql = "UPDATE post SET deleted = true WHERE id = ?")
+@ToString
 public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,8 +35,6 @@ public class Post extends BaseEntity {
     private String title;
 
     private int scope;
-    @ColumnDefault("false")
-    private boolean have;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Together> togetherList = new ArrayList<>();

@@ -80,7 +80,8 @@ public class PostService {
 
     @Transactional
     public List<PostHomeDto> getPostListByHave() {
-        List<Post> postList = postRepository.findAllOrderByRegDateDesc();
+        List<Post> postList = postRepository.findPostsByMostCountedHave();
+        System.out.println("postList = " + postList);
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
