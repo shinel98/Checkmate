@@ -10,6 +10,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     Post findByIdAndUserId(Long postId, Long userId);
 
+
     @Query("SELECT p FROM Post p WHERE p.scope = 3 ORDER BY p.uploadDate DESC")
     List<Post> findAllOrderByRegDateDesc();
 

@@ -24,4 +24,11 @@ public class Report extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
+
+    public static Report toEntity(String content, Post post) {
+        return Report.builder()
+                .content(content)
+                .post(post)
+                .build();
+    }
 }
