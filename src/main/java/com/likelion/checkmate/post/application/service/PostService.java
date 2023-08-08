@@ -74,14 +74,14 @@ public class PostService {
                     return PostHomeDto.toDto(post, count);
                 })
                 .collect(Collectors.toList());
-        System.out.println("postHomeDtoList = " + postHomeDtoList);
+
         return postHomeDtoList;
     }
 
     @Transactional
     public List<PostHomeDto> getPostListByHave() {
         List<Post> postList = postRepository.findPostsByMostCountedHave();
-        System.out.println("postList = " + postList);
+
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
@@ -89,14 +89,13 @@ public class PostService {
                     return PostHomeDto.toDto(post, count);
                 })
                 .collect(Collectors.toList());
-        System.out.println("postHomeDtoList = " + postHomeDtoList);
+
         return postHomeDtoList;
     }
 
     @Transactional
     public List<PostHomeDto> getPostListByTogether() {
         List<Post> postList = postRepository.findPostsByMostCountedTogether();
-        System.out.println("postList = " + postList);
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
@@ -104,7 +103,7 @@ public class PostService {
                     return PostHomeDto.toDto(post, count);
                 })
                 .collect(Collectors.toList());
-        System.out.println("postHomeDtoList = " + postHomeDtoList);
+
         return postHomeDtoList;
     }
     @Transactional
