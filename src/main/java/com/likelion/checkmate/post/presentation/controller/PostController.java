@@ -35,6 +35,12 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostListByHave());
     }
 
+    @DeleteMapping("/post")
+    public ResponseEntity<Void> deleteById (@RequestParam Long userId, @RequestParam Long postId) {
+        postService.deletePost(userId, postId);
+        return ResponseEntity.ok(null);
+    }
+
     @GetMapping("/post/together")
     public ResponseEntity<List<PostHomeDto>> getPostListByTogether() {
         return ResponseEntity.ok(postService.getPostListByTogether());
