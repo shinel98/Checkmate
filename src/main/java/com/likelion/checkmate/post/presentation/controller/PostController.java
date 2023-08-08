@@ -40,4 +40,9 @@ public class PostController {
         postService.deletePost(userId, postId);
         return ResponseEntity.ok(null);
     }
+
+    @GetMapping("/post/together")
+    public ResponseEntity<List<PostHomeDto>> getPostListByTogether() {
+        return ResponseEntity.ok(postService.getPostListByTogether());
+    }
 }
