@@ -19,4 +19,9 @@ public class UserService {
         user.setNickname(nickname);
         userRepository.save(user);
     }
+
+    @Transactional
+    public void delete(Long userId) {
+        userRepository.deleteById(userId);
+    }
 }
