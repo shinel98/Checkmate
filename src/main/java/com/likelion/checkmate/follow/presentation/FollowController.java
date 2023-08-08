@@ -2,12 +2,12 @@ package com.likelion.checkmate.follow.presentation;
 
 
 import com.likelion.checkmate.follow.application.FollowService;
+import com.likelion.checkmate.follow.application.dto.FollowDeleteDto;
+import com.likelion.checkmate.follow.presentation.request.FollowRequest;
+import com.likelion.checkmate.follow.presentation.response.FollowResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +17,13 @@ public class FollowController {
     private final FollowService followService;
 
     @DeleteMapping("/follow")
-    public ResponseEntity<Void> deleteById (@RequestParam Long userId, @RequestParam Long followId) {
-        followService.deleteFollow(userId, followId);
+    public ResponseEntity<Void> deleteById (@RequestBody FollowRequest request) {
+        followService.deleteFollow(FollowDeleteDto.toDto(request));
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/follow")
+    public ResponseEntity<FollowResponse> readAll (@RequestParam Long userId) {
+        return ResponseEntity.ok(followService.readAll(userId));
     }
 }

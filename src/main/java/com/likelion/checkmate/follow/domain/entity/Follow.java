@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Where(clause = "deleted = false")
+@ToString
 @SQLDelete(sql = "UPDATE follow SET deleted = true WHERE id = ?")
 public class Follow extends BaseEntity {
     @Id
@@ -22,8 +23,10 @@ public class Follow extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User follower;
 
-    private Long following_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User following;
+//    private Long following_id;
 
 }
