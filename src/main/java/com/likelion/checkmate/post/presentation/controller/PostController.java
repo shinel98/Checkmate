@@ -34,4 +34,10 @@ public class PostController {
     public ResponseEntity<List<PostHomeDto>> getPostListByHave() {
         return ResponseEntity.ok(postService.getPostListByHave());
     }
+
+    @DeleteMapping("/post")
+    public ResponseEntity<Void> deleteById (@RequestParam Long userId, @RequestParam Long postId) {
+        postService.deletePost(userId, postId);
+        return ResponseEntity.ok(null);
+    }
 }

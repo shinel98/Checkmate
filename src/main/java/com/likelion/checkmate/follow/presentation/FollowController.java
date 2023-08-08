@@ -1,7 +1,7 @@
-package com.likelion.checkmate.follow.domain.presentation;
+package com.likelion.checkmate.follow.presentation;
 
 
-import com.likelion.checkmate.follow.domain.application.FollowService;
+import com.likelion.checkmate.follow.application.FollowService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;

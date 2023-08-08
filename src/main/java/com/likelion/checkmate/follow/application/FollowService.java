@@ -1,9 +1,8 @@
-package com.likelion.checkmate.follow.domain.application;
+package com.likelion.checkmate.follow.application;
 
 
 import com.likelion.checkmate.follow.domain.entity.Follow;
 import com.likelion.checkmate.follow.domain.repository.FollowRepository;
-import com.likelion.checkmate.post.domain.entity.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
