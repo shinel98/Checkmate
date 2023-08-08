@@ -28,7 +28,8 @@ public class Item extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
-
+    @OneToOne(mappedBy = "item")
+    private Subtopic subtopic;
 
 
     public Item update(String content, int count, Post post) {
