@@ -32,7 +32,7 @@ public class PostService {
     @Transactional
     public Long update(PostDto dto) {
         Post post = postRepository.findByIdAndUserId(dto.getPostId(), dto.getUserId());
-        
+
         if(dto.getScope() == 3) {
             LocalDateTime now = LocalDateTime.now();
             post.update(dto.getTitle(), dto.getScope(), now);
@@ -91,5 +91,10 @@ public class PostService {
         System.out.println("postHomeDtoList = " + postHomeDtoList);
         return postHomeDtoList;
     }
-
+    @Transactional
+    public void deletePost (Long postId, Long userId) {
+        Post post = postRepository.findByIdAndUserId(postId, userId);
+        postRepository.deleteById(postId);
+    }
+}
 }
