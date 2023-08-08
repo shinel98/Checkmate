@@ -6,10 +6,8 @@ import com.likelion.checkmate.user.application.dto.UserDto;
 import com.likelion.checkmate.user.presentation.request.ChangeNicknameRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -22,5 +20,9 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    
+    @DeleteMapping("/user")
+    public ResponseEntity<Void> delete(@RequestParam Long userId) {
+        userService.delete(userId);
+        return ResponseEntity.ok(null);
+    }
 }
