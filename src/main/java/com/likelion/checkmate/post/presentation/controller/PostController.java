@@ -34,4 +34,9 @@ public class PostController {
     public ResponseEntity<List<PostHomeDto>> getPostListByHave() {
         return ResponseEntity.ok(postService.getPostListByHave());
     }
+
+    @GetMapping("/post/together")
+    public ResponseEntity<List<PostHomeDto>> getPostListByTogether() {
+        return ResponseEntity.ok(postService.getPostListByTogether());
+    }
 }
