@@ -79,7 +79,6 @@ sketch
 /src/main/resources/*.yaml
 /src/main/resources/*.yml
 
-
 HELP.md
 .gradle
 build/
