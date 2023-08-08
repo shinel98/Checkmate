@@ -25,7 +25,7 @@ public class PostDto {
                 .title(request.getTitle())
                 .scope(request.getScope())
                 .hashtags(request.getHashtag())
-                .content(request.getContent())
+                .content(request.getItems())
                 .build();
     }
 }
