@@ -8,5 +8,5 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findByPostId(Long postId);
 
-    void deleteByPostId(Long postId);
+    void deleteAllByPostId(Long postId);
 }

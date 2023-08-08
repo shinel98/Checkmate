@@ -1,7 +1,9 @@
 package com.likelion.checkmate.post.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.likelion.checkmate.common.BaseEntity;
 import com.likelion.checkmate.hashtag.domain.entity.Hashtag;
+import com.likelion.checkmate.have.domain.entity.Have;
 import com.likelion.checkmate.item.domain.entity.Item;
 import com.likelion.checkmate.report.domain.entity.Report;
 import com.likelion.checkmate.together.domain.entity.Together;
@@ -12,6 +14,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "deleted = false")
 @SQLDelete(sql = "UPDATE post SET deleted = true WHERE id = ?")
+@ToString
 public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +35,6 @@ public class Post extends BaseEntity {
     private String title;
 
     private int scope;
-    @ColumnDefault("false")
-    private boolean have;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Together> togetherList = new ArrayList<>();
@@ -44,12 +46,22 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Item> itemList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post")
+    private List<Have> haveList = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime uploadDate;
 
     public void update(String title, int scope) {
         this.title = title;
         this.scope = scope;
     }
-
+    public void update(String title, int scope, LocalDateTime date) {
+        this.title = title;
+        this.scope = scope;
+        this.uploadDate = date;
+    }
 }

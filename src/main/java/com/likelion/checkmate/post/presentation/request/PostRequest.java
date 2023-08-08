@@ -16,14 +16,14 @@ public class PostRequest {
     private String title;
     private int scope;
     private List<String> hashtag;
-    private List<ContentData> content;
+    private List<ContentData> items;
 
 
     @Getter
     @Setter
     @NoArgsConstructor
     public static class ContentData {
-        private String text;
+        private String category;
         private String content;
         private int count;
     }

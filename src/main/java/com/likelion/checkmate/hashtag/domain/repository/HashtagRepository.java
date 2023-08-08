@@ -8,7 +8,7 @@ import java.util.List;
 public interface HashtagRepository extends JpaRepository<Hashtag, Long> {
     List<Hashtag> findAllByPostId(Long postId);
 
-    void deleteByPostId(Long postId);
+    void deleteAllByPostId(Long postId);
 
 
 }
