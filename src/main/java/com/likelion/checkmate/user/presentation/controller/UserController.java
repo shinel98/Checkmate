@@ -2,8 +2,10 @@ package com.likelion.checkmate.user.presentation.controller;
 
 
 import com.likelion.checkmate.user.application.UserService.UserService;
+import com.likelion.checkmate.user.application.dto.MyPageDto;
 import com.likelion.checkmate.user.application.dto.UserDto;
 import com.likelion.checkmate.user.presentation.request.ChangeNicknameRequest;
+import com.likelion.checkmate.user.presentation.response.MyPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,5 +26,11 @@ public class UserController {
     public ResponseEntity<Void> delete(@RequestParam Long userId) {
         userService.delete(userId);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/user/my")
+    public ResponseEntity<MyPageResponse> readMyPage(@RequestParam Long userId) {
+        MyPageResponse response = MyPageResponse.toResponse(userService.readMyPage(userId));
+        return ResponseEntity.ok(response);
     }
 }

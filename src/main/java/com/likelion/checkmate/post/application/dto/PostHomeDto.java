@@ -37,7 +37,6 @@ public class PostHomeDto
     public static PostHomeDto toDto(Post post, int getCount) {
         PostHomeDto dto = new PostHomeDto();
 
-        System.out.println("post.getHashtagList() = " + post.getHashtagList());
         dto.postId = post.getId();
         dto.title = post.getTitle();
         dto.hashtags = post.getHashtagList().stream()
@@ -45,6 +44,35 @@ public class PostHomeDto
                 .collect(Collectors.toList());
         if(post.getUploadDate() != null)
             dto.date = post.getUploadDate().toLocalDate();
+        dto.together = post.getTogetherList().size();
+        dto.get = getCount;
+        dto.writer = post.getUser().getName();
+        dto.scope = post.getScope();
+
+        dto.items = post.getItemList().stream()
+                .map(item -> {
+                    Subtopic subtopic = item.getSubtopic();
+                    ContentData contentData = new ContentData();
+                    contentData.setCategory(subtopic != null ? subtopic.getName() : null);
+                    contentData.setItemId(item.getId());
+                    contentData.setContent(item.getContent());
+                    contentData.setCount(item.getCount());
+                    return contentData;
+                })
+                .collect(Collectors.toList());
+
+        return dto;
+    }
+
+    public static PostHomeDto toLocalDto(Post post, int getCount) {
+        PostHomeDto dto = new PostHomeDto();
+
+        dto.postId = post.getId();
+        dto.title = post.getTitle();
+        dto.hashtags = post.getHashtagList().stream()
+                .map(hashtag -> hashtag.getName())
+                .collect(Collectors.toList());
+        dto.date = post.getModifiedDate().toLocalDate();
         dto.together = post.getTogetherList().size();
         dto.get = getCount;
         dto.writer = post.getUser().getName();

@@ -12,7 +12,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 
     @Query("SELECT p FROM Post p WHERE p.scope = 3 ORDER BY p.uploadDate DESC")
-    List<Post> findAllOrderByRegDateDesc();
+    List<Post> findAllOrderByUploadDateDesc();
+
+    @Query("SELECT p FROM Post p WHERE p.scope = 1 and p.user.id = :userId ORDER BY p.modifiedDate DESC")
+    List<Post> findMyListOrderByModDateDesc(Long userId);
+
+    @Query("SELECT p FROM Post p JOIN Together t ON t.user.id = :userId WHERE p.scope = 3 ORDER BY p.uploadDate DESC")
+    List<Post> findTogetherListOrderByUploadDateDesc(Long userId);
 
     @Query("SELECT p " +
             "FROM Post p " +

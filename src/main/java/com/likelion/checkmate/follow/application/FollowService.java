@@ -30,8 +30,6 @@ public class FollowService {
         List<Follow> followerList = followRepository.findAllByFollowingId(userId);
         List<Follow> followingList = followRepository.findAllByFollowerId(userId);
 
-        System.out.println("followingList = " + followingList);
-        System.out.println("followerList = " + followerList);
         List<FollowDto> followerDtoList= followerList.stream().
                 map(follow -> FollowDto.toFollowerDto(follow))
                 .collect(Collectors.toList());

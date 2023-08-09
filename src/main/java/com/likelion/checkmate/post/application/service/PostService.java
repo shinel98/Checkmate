@@ -66,7 +66,7 @@ public class PostService {
 
     @Transactional
     public List<PostHomeDto> getPostListByTime() {
-        List<Post> postList = postRepository.findAllOrderByRegDateDesc();
+        List<Post> postList = postRepository.findAllOrderByUploadDateDesc();
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
