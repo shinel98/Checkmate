@@ -1,4 +1,4 @@
-package com.likelion.checkmate.follow.presentation;
+package com.likelion.checkmate.follow.presentation.controller;
 
 
 import com.likelion.checkmate.follow.application.FollowService;
