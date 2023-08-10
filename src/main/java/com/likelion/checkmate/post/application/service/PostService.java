@@ -5,6 +5,7 @@ import com.likelion.checkmate.hashtag.domain.repository.HashtagRepository;
 import com.likelion.checkmate.have.domain.repository.HaveRepository;
 import com.likelion.checkmate.item.domain.entity.Item;
 import com.likelion.checkmate.item.domain.repository.ItemRepository;
+import com.likelion.checkmate.post.application.dto.PostDeleteDto;
 import com.likelion.checkmate.post.application.dto.PostDto;
 import com.likelion.checkmate.post.application.dto.PostHomeDto;
 import com.likelion.checkmate.post.domain.entity.Post;
@@ -107,9 +108,9 @@ public class PostService {
         return postHomeDtoList;
     }
     @Transactional
-    public void deletePost (Long postId, Long userId) {
-        Post post = postRepository.findByIdAndUserId(postId, userId);
-        postRepository.deleteById(postId);
+    public void deletePost (PostDeleteDto dto) {
+        postRepository.findByIdAndUserId(dto.getPostId(), dto.getUserId());
+        postRepository.deleteById(dto.getPostId());
     }
 }
 

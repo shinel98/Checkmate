@@ -1,9 +1,13 @@
 package com.likelion.checkmate.post.presentation.controller;
 
 
+import com.likelion.checkmate.follow.application.dto.FollowDeleteDto;
+import com.likelion.checkmate.follow.presentation.request.FollowRequest;
+import com.likelion.checkmate.post.application.dto.PostDeleteDto;
 import com.likelion.checkmate.post.application.dto.PostDto;
 import com.likelion.checkmate.post.application.dto.PostHomeDto;
 import com.likelion.checkmate.post.application.service.PostService;
+import com.likelion.checkmate.post.presentation.request.PostDeleteRequest;
 import com.likelion.checkmate.post.presentation.request.PostRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +39,15 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostListByHave());
     }
 
+//    @DeleteMapping("/post")
+//    public ResponseEntity<Void> deleteById (@RequestParam Long userId, @RequestParam Long postId) {
+//        postService.deletePost(userId, postId);
+//        return ResponseEntity.ok(null);
+//    }
+
     @DeleteMapping("/post")
-    public ResponseEntity<Void> deleteById (@RequestParam Long userId, @RequestParam Long postId) {
-        postService.deletePost(userId, postId);
+    public ResponseEntity<Void> deleteById (@RequestBody PostDeleteRequest request) {
+        postService.deletePost(PostDeleteDto.toDto(request));
         return ResponseEntity.ok(null);
     }
 
