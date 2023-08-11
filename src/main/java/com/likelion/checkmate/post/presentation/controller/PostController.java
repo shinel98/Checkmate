@@ -21,6 +21,17 @@ public class PostController {
     private final PostService postService;
     private final HaveRepository haveRepository;
 
+
+    @PostMapping("/post")
+    public ResponseEntity<Long> create(@RequestBody PostRequest request) {
+        PostDto postDto = PostDto.toDto(request);
+        if (request.getHashtag() != null && request.getHashtag().size() > 5) { //해쉬태그 5개로 제한
+            return ResponseEntity.badRequest().build();
+        }
+        Long postId = postService.create(postDto);
+        return ResponseEntity.ok(postId);
+    }
+
     @PatchMapping("/post")
     public ResponseEntity<Long> edit(@RequestBody PostRequest request) {
         Long id = postService.update(PostDto.toDto(request));
