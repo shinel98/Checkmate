@@ -5,6 +5,7 @@ import com.likelion.checkmate.user.application.UserService.UserService;
 import com.likelion.checkmate.user.application.dto.MyPageDto;
 import com.likelion.checkmate.user.application.dto.UserDto;
 import com.likelion.checkmate.user.presentation.request.ChangeNicknameRequest;
+import com.likelion.checkmate.user.presentation.request.RegisterNicknameRequest;
 import com.likelion.checkmate.user.presentation.response.MyPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class UserController {
     private final UserService userService;
+
+    @PostMapping("/user/my")
+    public ResponseEntity<Void> registerNickname(@RequestBody RegisterNicknameRequest request) {
+        UserDto userDto = UserDto.toDto(request);
+        userService.registerUserNickname(userDto.getId(), userDto.getNickname());
+        return ResponseEntity.ok().build();
+    }
     @PatchMapping("/user/my")
     public ResponseEntity<Void> changeNickname(@RequestBody ChangeNicknameRequest request) {
         UserDto userDto = UserDto.from(request);

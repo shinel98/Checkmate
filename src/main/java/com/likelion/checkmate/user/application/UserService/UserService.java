@@ -27,6 +27,13 @@ public class UserService {
     private final HaveRepository haveRepository;
     private final FollowRepository followRepository;
 
+
+    @Transactional
+    public void registerUserNickname(Long userId, String nickname) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        user.setNickname(nickname);
+        userRepository.save(user);
+    }
     @Transactional
     public void changeUserInfo(Long userId, String nickname) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -64,4 +71,5 @@ public class UserService {
 
         return MyPageDto.toDto(user, followerList.size(), followingList.size(), myPostDtoList, myTogetherDtoList);
     }
+
 }
