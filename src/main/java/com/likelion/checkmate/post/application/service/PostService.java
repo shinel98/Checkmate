@@ -5,16 +5,22 @@ import com.likelion.checkmate.hashtag.domain.repository.HashtagRepository;
 import com.likelion.checkmate.have.domain.repository.HaveRepository;
 import com.likelion.checkmate.item.domain.entity.Item;
 import com.likelion.checkmate.item.domain.repository.ItemRepository;
+import com.likelion.checkmate.post.application.dto.PostDeleteDto;
 import com.likelion.checkmate.post.application.dto.PostDto;
 import com.likelion.checkmate.post.application.dto.PostHomeDto;
 import com.likelion.checkmate.post.domain.entity.Post;
 import com.likelion.checkmate.post.domain.repository.PostRepository;
 import com.likelion.checkmate.post.presentation.request.PostRequest;
+import com.likelion.checkmate.post.presentation.response.PostDetailResponse;
 import com.likelion.checkmate.subtopic.domain.entity.Subtopic;
 import com.likelion.checkmate.subtopic.domain.repository.SubtopicRepository;
+import com.likelion.checkmate.user.domain.entity.User;
+import com.likelion.checkmate.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,16 +34,16 @@ public class PostService {
     private final ItemRepository itemRepository;
     private final SubtopicRepository subtopicRepository;
     private final HaveRepository haveRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public Long update(PostDto dto) {
         Post post = postRepository.findByIdAndUserId(dto.getPostId(), dto.getUserId());
 
-        if(dto.getScope() == 3) {
+        if (dto.getScope() == 3) {
             LocalDateTime now = LocalDateTime.now();
             post.update(dto.getTitle(), dto.getScope(), now);
-        }
-        else {
+        } else {
             post.update(dto.getTitle(), dto.getScope());
         }
 
@@ -51,11 +57,11 @@ public class PostService {
 
         itemRepository.deleteAllByPostId(dto.getPostId());
 
-        for(String name : dto.getHashtags()) {
-            hashtagRepository.save(Hashtag.toEntity(name,post));
+        for (String name : dto.getHashtags()) {
+            hashtagRepository.save(Hashtag.toEntity(name, post));
         }
 
-        for(PostRequest.ContentData data : dto.getContent()) {
+        for (PostRequest.ContentData data : dto.getContent()) {
             Item item = Item.toEntity(data.getContent(), data.getCount(), post);
             itemRepository.save(item);
             subtopicRepository.save(Subtopic.toEntity(data.getCategory(), item));
@@ -106,10 +112,40 @@ public class PostService {
 
         return postHomeDtoList;
     }
-    @Transactional
-    public void deletePost (Long postId, Long userId) {
-        Post post = postRepository.findByIdAndUserId(postId, userId);
-        postRepository.deleteById(postId);
-    }
-}
 
+    @Transactional
+    public void deletePost(PostDeleteDto dto) {
+        postRepository.findByIdAndUserId(dto.getPostId(), dto.getUserId());
+        postRepository.deleteById(dto.getPostId());
+    }
+
+    @Transactional
+    public Post getDetailPost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        return post;
+    }
+
+    @Transactional
+    public Long create(PostDto dto) {
+        LocalDateTime now = LocalDateTime.now();
+        Post post = Post.builder()
+                .user(User.builder().id(dto.getUserId()).build())
+                .title(dto.getTitle())
+                .uploadDate(now)
+                .scope(dto.getScope())
+                .build();
+        postRepository.save(post);
+
+        for (String name : dto.getHashtags()) {
+            hashtagRepository.save(Hashtag.toEntity(name, post));
+        }
+
+        for (PostRequest.ContentData data : dto.getContent()) {
+            Item item = Item.toEntity(data.getContent(), data.getCount(), post);
+            itemRepository.save(item);
+            subtopicRepository.save(Subtopic.toEntity(data.getCategory(), item));
+        }
+
+        return post.getId();
+    }
+        }

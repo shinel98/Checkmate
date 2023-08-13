@@ -1,7 +1,7 @@
 package com.likelion.checkmate.together.application.service;
 
 
-import com.likelion.checkmate.together.domain.entity.Together;
+import com.likelion.checkmate.together.application.dto.TogetherDeleteDto;
 import com.likelion.checkmate.together.domain.repository.TogetherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,9 +13,9 @@ public class TogetherService {
 
     private final TogetherRepository togetherRepository;
     @Transactional
-    public void deleteTogether (Long postId, Long userId) {
-        Together together = togetherRepository.findByIdAndUserId(postId, userId);
-        togetherRepository.deleteById(together.getId());
+    public void deleteTogether (TogetherDeleteDto dto) {
+        togetherRepository.findByIdAndUserId(dto.getPostId(), dto.getUserId());
+        togetherRepository.deleteById(dto.getPostId());
     }
 
 }
