@@ -19,4 +19,12 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    @Transactional
+    public void decreaseCount(Long itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("item not found"));
+        item.setCount(item.getCount() - 1); //카운트 감소
+        itemRepository.save(item);
+    }
+
 }
