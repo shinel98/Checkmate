@@ -4,6 +4,7 @@ import com.likelion.checkmate.follow.application.dto.FollowDto;
 import com.likelion.checkmate.follow.domain.entity.Follow;
 import com.likelion.checkmate.follow.domain.repository.FollowRepository;
 import com.likelion.checkmate.have.domain.repository.HaveRepository;
+import com.likelion.checkmate.jwt.JwtPair;
 import com.likelion.checkmate.post.application.dto.PostHomeDto;
 import com.likelion.checkmate.post.domain.entity.Post;
 import com.likelion.checkmate.post.domain.repository.PostRepository;
@@ -15,7 +16,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,4 +67,22 @@ public class UserService {
 
         return MyPageDto.toDto(user, followerList.size(), followingList.size(), myPostDtoList, myTogetherDtoList);
     }
+
+    public Optional<User> isPresent(Long kakao_id) {
+        return Optional.ofNullable(userRepository.findUserByKakaoId(kakao_id));
+    }
+
+    @Transactional
+    public Long saveUser(HashMap<String, Object> userInfo, JwtPair tokens) {
+        User user = userRepository.findUserByKakaoId(Long.parseLong(userInfo.get("userKakaoId").toString()));
+        user.setRefreshToken(tokens.getRefreshToken());
+        userRepository.save(user);
+        return user.getId();
+    }
+    @Transactional
+    public Long saveUser(HashMap<String, Object> userInfo) {
+        User newUser = userRepository.save(User.toEntity(userInfo));
+        return newUser.getId();
+    }
+
 }

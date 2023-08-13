@@ -59,11 +59,11 @@ public class DummyController {
     }
 
     private void saveUser() {
-        hyeok = userRepository.save(User.builder().email("inhyeok38@gmail.com").image("img").name("이인혁").nickname("shinel").u_id("kakao_id").build());
-        chang = userRepository.save(User.builder().email("chang@gmail.com").image("img").name("이창건").nickname("changchang").u_id("kakao_id").build());
-        seo = userRepository.save(User.builder().email("eun@gmail.com").image("img").name("박은서").nickname("seoseo").u_id("kakao_id").build());
-        wook = userRepository.save(User.builder().email("wook@gmail.com").image("img").name("김종욱").nickname("jongjong").u_id("kakao_id").build());
-        ji = userRepository.save(User.builder().email("ji@gmail.com").image("img").name("김예지").nickname("yeah").u_id("kakao_id").build());
+        hyeok = userRepository.save(User.builder().email("inhyeok38@gmail.com").image("img").name("이인혁").kakaoId(3L).build());
+        chang = userRepository.save(User.builder().email("chang@gmail.com").image("img").name("이창건").kakaoId(2L).build());
+        seo = userRepository.save(User.builder().email("eun@gmail.com").image("img").name("박은서").kakaoId(3L).build());
+        wook = userRepository.save(User.builder().email("wook@gmail.com").image("img").name("김종욱").kakaoId(4L).build());
+        ji = userRepository.save(User.builder().email("ji@gmail.com").image("img").name("김예지").kakaoId(5L).build());
     }
 
     private void savePost() {

@@ -10,6 +10,7 @@ import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Entity
@@ -25,12 +26,14 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String u_id;
+    private Long kakaoId;
 
     private String name;
     private String nickname;
     private String email;
     private String image;
+    @Column(columnDefinition = "TEXT")
+    private String refreshToken;
 
     @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Follow> followingList = new ArrayList<>();
@@ -42,5 +45,24 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> postList = new ArrayList<>();
 
+//    public static User toEntity(HashMap<String, Object> userInfo, String refreshToken) {
+//        return User.builder()
+//                .kakaoId(Long.parseLong(userInfo.get("userKakaoId").toString()))
+//                .name(userInfo.get("name").toString())
+//                .nickname(userInfo.get("nickname").toString())
+//                .email(userInfo.get("email").toString())
+//                .refreshToken(refreshToken)
+//                .build();
+//    }
+
+    public static User toEntity(HashMap<String, Object> userInfo) {
+        System.out.println("userInfo = " + userInfo);
+        return User.builder()
+                .kakaoId(Long.parseLong(userInfo.get("userKakaoId").toString()))
+                .name(userInfo.get("nickname").toString())
+//                .nickname(userInfo.get("nickname").toString())
+                .email(userInfo.get("email").toString())
+                .build();
+    }
 
 }
