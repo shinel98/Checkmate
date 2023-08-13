@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 public class PostHomeDto
 {
     private Long postId;
+    private Long userId;
     private String title;
     private List<String> hashtags;
     private LocalDate date;
@@ -38,6 +39,7 @@ public class PostHomeDto
         PostHomeDto dto = new PostHomeDto();
 
         dto.postId = post.getId();
+        dto.userId = post.getUser().getId();
         dto.title = post.getTitle();
         dto.hashtags = post.getHashtagList().stream()
                 .map(hashtag -> hashtag.getName())
@@ -68,6 +70,7 @@ public class PostHomeDto
         PostHomeDto dto = new PostHomeDto();
 
         dto.postId = post.getId();
+        dto.userId = post.getUser().getId();
         dto.title = post.getTitle();
         dto.hashtags = post.getHashtagList().stream()
                 .map(hashtag -> hashtag.getName())

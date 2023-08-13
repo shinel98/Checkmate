@@ -148,4 +148,17 @@ public class PostService {
 
         return post.getId();
     }
-        }
+
+    public List<PostHomeDto> search(String keyword) {
+        List<Post> postList = postRepository.findPostsByTitleOrHashTag(keyword);
+
+        List<PostHomeDto> postHomeDtoList = postList.stream()
+                .map(post -> {
+                    int count = haveRepository.findAllGetPost(post.getId());
+                    return PostHomeDto.toDto(post, count);
+                })
+                .collect(Collectors.toList());
+
+        return postHomeDtoList;
+    }
+}

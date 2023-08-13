@@ -34,5 +34,13 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "ORDER BY COUNT(t.post.id) DESC, p.id ASC")
     List<Post> findPostsByMostCountedTogether();
 
+    @Query("SELECT p " +
+            "FROM Post p " +
+            "LEFT JOIN Hashtag h ON p.id = h.post.id " +
+            "WHERE p.title LIKE %:keyword% " +
+            "OR h.name LIKE %:keyword% " +
+            "AND p.scope = 3")
+    List<Post> findPostsByTitleOrHashTag(String keyword);
+
 
 }
