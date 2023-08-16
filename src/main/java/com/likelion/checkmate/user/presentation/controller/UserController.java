@@ -1,9 +1,7 @@
 package com.likelion.checkmate.user.presentation.controller;
 
 
-import com.amazonaws.Response;
-import com.likelion.checkmate.user.application.UserService.UserService;
-import com.likelion.checkmate.user.application.dto.MyPageDto;
+import com.likelion.checkmate.user.application.service.UserService;
 import com.likelion.checkmate.user.application.dto.UserDto;
 import com.likelion.checkmate.user.presentation.request.ChangeNicknameRequest;
 import com.likelion.checkmate.user.presentation.request.RegisterNicknameRequest;

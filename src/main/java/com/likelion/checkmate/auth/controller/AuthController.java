@@ -4,16 +4,14 @@ package com.likelion.checkmate.auth.controller;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.likelion.checkmate.auth.request.LoginRequest;
 import com.likelion.checkmate.jwt.*;
-import com.likelion.checkmate.user.application.UserService.UserService;
+import com.likelion.checkmate.user.application.service.UserService;
 import com.likelion.checkmate.user.application.dto.UserJwtDto;
 import com.likelion.checkmate.user.domain.entity.User;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
