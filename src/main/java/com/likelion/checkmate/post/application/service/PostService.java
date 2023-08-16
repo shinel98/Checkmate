@@ -161,4 +161,11 @@ public class PostService {
 
         return postHomeDtoList;
     }
+
+    @Transactional
+    public void changePostScope(Long postId, int scope) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        post.setScope(scope);
+        postRepository.save(post);
+    }
 }
