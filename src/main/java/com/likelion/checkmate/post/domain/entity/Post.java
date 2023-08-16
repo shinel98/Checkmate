@@ -63,4 +63,18 @@ public class Post extends BaseEntity {
         this.scope = scope;
         this.uploadDate = date;
     }
+    public Post deepCopy() {
+        Post clonedPost = Post.builder()
+                .title(this.title)
+                .scope(1)
+                .build();
+
+        for (Hashtag h : hashtagList) {
+            clonedPost.getHashtagList().add(h.cloneWithNewPost(clonedPost));
+        }
+        for (Item i : itemList) {
+            clonedPost.getItemList().add(i.cloneWithNewPost(clonedPost));
+        }
+        return clonedPost;
+    }
 }

@@ -42,4 +42,11 @@ public class Subtopic extends BaseEntity {
                 .item(item)
                 .build();
     }
+
+    public Subtopic cloneWithNewItem(Item newItem) {
+        return Subtopic.builder()
+                .name(this.name)
+                .item(newItem)
+                .build();
+    }
 }

@@ -24,24 +24,24 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private final PostRepository postRepository;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String uri = request.getRequestURI();  // 예: /posts/123
+        String uri = request.getRequestURI();
         String[] parts = uri.split("/");
 
         Long postId = null;
 
         try {
             if (parts.length > 0) {
-                postId = Long.parseLong(parts[parts.length - 1]);  // 마지막 부분을 post ID로 추출
+                postId = Long.parseLong(parts[parts.length - 1]);
             }
         } catch (NumberFormatException e) {
-            // URL의 마지막 부분이 숫자가 아닌 경우, 처리
+
         }
 
         if (postId != null) {
             Post post = postRepository.findById(postId).orElse(null);
 
             if (post != null && post.getScope() == 2) {
-                // scope 값이 2일 때만 Interceptor 로직을 건너뛰기
+
                 return true;
             }
         }

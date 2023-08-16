@@ -4,6 +4,7 @@ import com.likelion.checkmate.common.BaseEntity;
 import com.likelion.checkmate.follow.domain.entity.Follow;
 import com.likelion.checkmate.post.domain.entity.Post;
 import com.likelion.checkmate.together.domain.entity.Together;
+import com.likelion.checkmate.usercheck.domain.entity.Usercheck;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -21,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Where(clause = "deleted = false")
 @SQLDelete(sql = "UPDATE user SET deleted = true WHERE id = ?")
+@ToString
 public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +32,14 @@ public class User extends BaseEntity {
 
     private String name;
     private String nickname;
+
     private String email;
     private String image;
     @Column(columnDefinition = "TEXT")
     private String refreshToken;
 
+    @Column(columnDefinition = "TEXT")
+    private String accessToken;
     @OneToMany(mappedBy = "following", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Follow> followingList = new ArrayList<>();
 
@@ -44,6 +49,8 @@ public class User extends BaseEntity {
     private List<Together> togetherList = new ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> postList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Usercheck> usercheckList = new ArrayList<>();
 
 //    public static User toEntity(HashMap<String, Object> userInfo, String refreshToken) {
 //        return User.builder()
@@ -62,6 +69,7 @@ public class User extends BaseEntity {
                 .name(userInfo.get("nickname").toString())
 //                .nickname(userInfo.get("nickname").toString())
                 .email(userInfo.get("email").toString())
+                .accessToken(userInfo.get("accessToken").toString())
                 .build();
     }
 

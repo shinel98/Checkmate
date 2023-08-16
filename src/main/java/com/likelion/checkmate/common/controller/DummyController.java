@@ -18,6 +18,8 @@ import com.likelion.checkmate.together.domain.entity.Together;
 import com.likelion.checkmate.together.domain.repository.TogetherRepository;
 import com.likelion.checkmate.user.domain.entity.User;
 import com.likelion.checkmate.user.domain.repository.UserRepository;
+import com.likelion.checkmate.usercheck.domain.entity.Usercheck;
+import com.likelion.checkmate.usercheck.presentation.controller.UsercheckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,7 @@ public class DummyController {
     private final ReportRepository reportRepository;
     private final HaveRepository haveRepository;
     private final FollowRepository followRepository;
+    private final UsercheckRepository usercheckRepository;
 
 
     private User hyeok;
@@ -120,6 +123,10 @@ public class DummyController {
         reportRepository.save(Report.builder().content("부적절한 내용이에요2").post(hyeokPost2).build());
 
         haveRepository.save(Have.builder().destId(3L).post(hyeokPost1).build());
+
+        usercheckRepository.save(Usercheck.builder().user(hyeok).item(item5).postId(1L).build());
+        usercheckRepository.save(Usercheck.builder().user(chang).item(item6).postId(1L).build());
+        usercheckRepository.save(Usercheck.builder().user(ji).item(item6).postId(1L).build());
     }
 
     private void saveFollow() {
@@ -128,5 +135,6 @@ public class DummyController {
         followRepository.save(Follow.builder().follower(ji).following(hyeok).build());
         followRepository.save(Follow.builder().follower(wook).following(hyeok).build());
     }
+
 
 }

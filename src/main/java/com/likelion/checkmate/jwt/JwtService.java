@@ -17,21 +17,21 @@ import java.util.stream.Collectors;
 public class JwtService {
     private final JwtProperties jwtProperties;
 
-    public String issueToken(String email, String name, GrantType typ) {
+    public String issueToken(String email, String name, String accessToken, GrantType typ) {
         Map<String, Date> pair = calcExpiry(jwtProperties.getTokenExpiry(typ));
 
         return build(
-                email, name,
+                email, name, accessToken,
                 pair.get(Claims.ISSUED_AT),
                 pair.get(Claims.EXPIRATION));
     }
 
-    public JwtPair issueToken(String email, String name) {
+    public JwtPair issueToken(String email, String name, String accessToken) {
         List<String> tokens = Arrays.stream(GrantType.values())
                 .map(jwtProperties::getTokenExpiry)
                 .map(this::calcExpiry)
                 .map(pair -> this.build(
-                        email, name,
+                        email, name, accessToken,
                         pair.get(Claims.ISSUED_AT),
                         pair.get(Claims.EXPIRATION))).collect(Collectors.toList());
 
@@ -73,12 +73,13 @@ public class JwtService {
         }
         return Optional.empty();
     }
-    private String build(String email,String name, Date iat, Date exp) {
+    private String build(String email,String name, String accessToken, Date iat, Date exp) {
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setIssuer(jwtProperties.getIssuer())
                 .setSubject(email)
                 .claim("name", name)
+                .claim("accessToken", accessToken)
                 .claim("rol", Role.USER.name())
                 .setIssuedAt(iat)
                 .setExpiration(exp)

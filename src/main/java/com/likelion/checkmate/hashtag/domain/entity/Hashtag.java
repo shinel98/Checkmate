@@ -24,7 +24,7 @@ public class Hashtag extends BaseEntity {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Post post;
 
     public Hashtag update(String name, Post post){
@@ -37,6 +37,13 @@ public class Hashtag extends BaseEntity {
         return Hashtag.builder()
                 .name(name)
                 .post(post)
+                .build();
+
+    }
+    public Hashtag cloneWithNewPost(Post newPost) {
+        return Hashtag.builder()
+                .name(this.name)
+                .post(newPost)
                 .build();
     }
 }

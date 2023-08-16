@@ -16,6 +16,8 @@ import com.likelion.checkmate.subtopic.domain.entity.Subtopic;
 import com.likelion.checkmate.subtopic.domain.repository.SubtopicRepository;
 import com.likelion.checkmate.user.domain.entity.User;
 import com.likelion.checkmate.user.domain.repository.UserRepository;
+import com.likelion.checkmate.usercheck.domain.entity.Usercheck;
+import com.likelion.checkmate.usercheck.presentation.controller.UsercheckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,7 @@ public class PostService {
     private final SubtopicRepository subtopicRepository;
     private final HaveRepository haveRepository;
     private final UserRepository userRepository;
+    private final UsercheckRepository usercheckRepository;
 
     @Transactional
     public Long update(PostDto dto) {
@@ -76,11 +79,24 @@ public class PostService {
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
+                    // 이 리스트는 각 item에 대한 userId의 목록을 저장합니다.
+                    List<PostHomeDto.ContentData> contentDataList = post.getItemList().stream()
+                            .map(item -> {
+                                List<Long> checkedListForItem = usercheckRepository.findAllUserCheckList(post.getId(), item.getId());
+                                PostHomeDto.ContentData contentData = new PostHomeDto.ContentData();
+                                contentData.setCategory(item.getSubtopic() != null ? item.getSubtopic().getName() : null);
+                                contentData.setItemId(item.getId());
+                                contentData.setContent(item.getContent());
+                                contentData.setCheck(checkedListForItem);
+                                return contentData;
+                            })
+                            .collect(Collectors.toList());
+
                     int count = haveRepository.findAllGetPost(post.getId());
-                    return PostHomeDto.toDto(post, count);
+
+                    return PostHomeDto.toDto(post, count, contentDataList);
                 })
                 .collect(Collectors.toList());
-
         return postHomeDtoList;
     }
 
@@ -91,8 +107,22 @@ public class PostService {
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
+                    // 이 리스트는 각 item에 대한 userId의 목록을 저장합니다.
+                    List<PostHomeDto.ContentData> contentDataList = post.getItemList().stream()
+                            .map(item -> {
+                                List<Long> checkedListForItem = usercheckRepository.findAllUserCheckList(post.getId(), item.getId());
+                                PostHomeDto.ContentData contentData = new PostHomeDto.ContentData();
+                                contentData.setCategory(item.getSubtopic() != null ? item.getSubtopic().getName() : null);
+                                contentData.setItemId(item.getId());
+                                contentData.setContent(item.getContent());
+                                contentData.setCheck(checkedListForItem);
+                                return contentData;
+                            })
+                            .collect(Collectors.toList());
+
                     int count = haveRepository.findAllGetPost(post.getId());
-                    return PostHomeDto.toDto(post, count);
+
+                    return PostHomeDto.toDto(post, count, contentDataList);
                 })
                 .collect(Collectors.toList());
 
@@ -105,8 +135,22 @@ public class PostService {
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
+                    // 이 리스트는 각 item에 대한 userId의 목록을 저장합니다.
+                    List<PostHomeDto.ContentData> contentDataList = post.getItemList().stream()
+                            .map(item -> {
+                                List<Long> checkedListForItem = usercheckRepository.findAllUserCheckList(post.getId(), item.getId());
+                                PostHomeDto.ContentData contentData = new PostHomeDto.ContentData();
+                                contentData.setCategory(item.getSubtopic() != null ? item.getSubtopic().getName() : null);
+                                contentData.setItemId(item.getId());
+                                contentData.setContent(item.getContent());
+                                contentData.setCheck(checkedListForItem);
+                                return contentData;
+                            })
+                            .collect(Collectors.toList());
+
                     int count = haveRepository.findAllGetPost(post.getId());
-                    return PostHomeDto.toDto(post, count);
+
+                    return PostHomeDto.toDto(post, count, contentDataList);
                 })
                 .collect(Collectors.toList());
 
@@ -154,8 +198,22 @@ public class PostService {
 
         List<PostHomeDto> postHomeDtoList = postList.stream()
                 .map(post -> {
+                    // 이 리스트는 각 item에 대한 userId의 목록을 저장합니다.
+                    List<PostHomeDto.ContentData> contentDataList = post.getItemList().stream()
+                            .map(item -> {
+                                List<Long> checkedListForItem = usercheckRepository.findAllUserCheckList(post.getId(), item.getId());
+                                PostHomeDto.ContentData contentData = new PostHomeDto.ContentData();
+                                contentData.setCategory(item.getSubtopic() != null ? item.getSubtopic().getName() : null);
+                                contentData.setItemId(item.getId());
+                                contentData.setContent(item.getContent());
+                                contentData.setCheck(checkedListForItem);
+                                return contentData;
+                            })
+                            .collect(Collectors.toList());
+
                     int count = haveRepository.findAllGetPost(post.getId());
-                    return PostHomeDto.toDto(post, count);
+
+                    return PostHomeDto.toDto(post, count, contentDataList);
                 })
                 .collect(Collectors.toList());
 
