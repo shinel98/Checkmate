@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class PostHomeDto
 {
     private Long postId;
@@ -29,13 +28,15 @@ public class PostHomeDto
     @Setter
     @NoArgsConstructor
     public static class ContentData {
-        private String category;
         private Long itemId;
+        private String category;
         private String content;
-        private int count;
+
+        private List<Long> check;
     }
 
-    public static PostHomeDto toDto(Post post, int getCount) {
+
+    public static PostHomeDto toDto(Post post, int getCount, List<ContentData> contentDataList) {
         PostHomeDto dto = new PostHomeDto();
 
         dto.postId = post.getId();
@@ -51,18 +52,7 @@ public class PostHomeDto
         dto.writer = post.getUser().getName();
         dto.scope = post.getScope();
 
-        dto.items = post.getItemList().stream()
-                .map(item -> {
-                    Subtopic subtopic = item.getSubtopic();
-                    ContentData contentData = new ContentData();
-                    contentData.setCategory(subtopic != null ? subtopic.getName() : null);
-                    contentData.setItemId(item.getId());
-                    contentData.setContent(item.getContent());
-                    contentData.setCount(item.getCount());
-                    return contentData;
-                })
-                .collect(Collectors.toList());
-
+        dto.items = contentDataList;
         return dto;
     }
 
@@ -88,7 +78,6 @@ public class PostHomeDto
                     contentData.setCategory(subtopic != null ? subtopic.getName() : null);
                     contentData.setItemId(item.getId());
                     contentData.setContent(item.getContent());
-                    contentData.setCount(item.getCount());
                     return contentData;
                 })
                 .collect(Collectors.toList());

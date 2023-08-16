@@ -1,4 +1,4 @@
-package com.likelion.checkmate.together.presentation;
+package com.likelion.checkmate.together.presentation.request;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TogetherDeleteRequest {
+public class TogetherRequest {
     private Long userId;
     private Long postId;
 }

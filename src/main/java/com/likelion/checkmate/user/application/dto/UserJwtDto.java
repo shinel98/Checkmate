@@ -14,5 +14,6 @@ public class UserJwtDto {
     private Boolean isRegistered;
     private String tokenType;
     private JwtPair tokens;
+//    private String accessToken;
 
 }

@@ -15,6 +15,7 @@ import com.likelion.checkmate.user.application.dto.MyPageDto;
 import com.likelion.checkmate.user.domain.entity.User;
 import com.likelion.checkmate.user.domain.repository.UserRepository;
 import com.likelion.checkmate.user.presentation.request.ChangeNicknameRequest;
+import com.likelion.checkmate.usercheck.presentation.controller.UsercheckRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +39,7 @@ public class UserService {
     private final PostRepository postRepository;
     private final HaveRepository haveRepository;
     private final FollowRepository followRepository;
+    private final UsercheckRepository usercheckRepository;
     private final AmazonS3 s3;
 
     @Value("${aws.endPoint}")
@@ -78,10 +80,22 @@ public class UserService {
                 })
                 .collect(Collectors.toList());
 
+
         List<PostHomeDto> myTogetherDtoList = myTogetherList.stream()
                 .map(post -> {
+                    List<PostHomeDto.ContentData> contentDataList = post.getItemList().stream()
+                            .map(item -> {
+                                List<Long> checkedListForItem = usercheckRepository.findAllUserCheckList(post.getId(), item.getId());
+                                PostHomeDto.ContentData contentData = new PostHomeDto.ContentData();
+                                contentData.setCategory(item.getSubtopic() != null ? item.getSubtopic().getName() : null);
+                                contentData.setItemId(item.getId());
+                                contentData.setContent(item.getContent());
+                                contentData.setCheck(checkedListForItem);
+                                return contentData;
+                            })
+                            .collect(Collectors.toList());
                     int count = haveRepository.findAllGetPost(post.getId());
-                    return PostHomeDto.toDto(post, count);
+                    return PostHomeDto.toDto(post, count, contentDataList);
                 })
                 .collect(Collectors.toList());
 
