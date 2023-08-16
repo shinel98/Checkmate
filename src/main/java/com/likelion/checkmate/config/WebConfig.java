@@ -29,6 +29,7 @@
 //        registry.addMapping("/**")
 //                .allowedOriginPatterns(client)
 //                .allowedMethods("GET", "POST", "DELETE", "PATCH")
+//                .allowedHeaders("*")
 //                .allowCredentials(true);
 //    }
 //}

@@ -1,5 +1,8 @@
 package com.likelion.checkmate.user.application.UserService;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.*;
+import com.likelion.checkmate.aws.AwsProperties;
 import com.likelion.checkmate.follow.application.dto.FollowDto;
 import com.likelion.checkmate.follow.domain.entity.Follow;
 import com.likelion.checkmate.follow.domain.repository.FollowRepository;
@@ -13,9 +16,15 @@ import com.likelion.checkmate.user.domain.entity.User;
 import com.likelion.checkmate.user.domain.repository.UserRepository;
 import com.likelion.checkmate.user.presentation.request.ChangeNicknameRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +38,13 @@ public class UserService {
     private final PostRepository postRepository;
     private final HaveRepository haveRepository;
     private final FollowRepository followRepository;
+    private final AmazonS3 s3;
+
+    @Value("${aws.endPoint}")
+    private String endPoint;
+
+    private final AwsProperties awsProperties;
+
 
 
     @Transactional
@@ -90,6 +106,35 @@ public class UserService {
     public Long saveUser(HashMap<String, Object> userInfo) {
         User newUser = userRepository.save(User.toEntity(userInfo));
         return newUser.getId();
+    }
+    @Transactional
+    public String saveImage(MultipartFile file, Long userId) {
+        final String bucketName = "checkmate-bucket1";
+
+        String objectName = userId + "_" + System.currentTimeMillis() + "_" + file.getOriginalFilename(); // unique name
+
+        try {
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(file.getSize());
+            objectMetadata.setContentType(file.getContentType());
+            s3.putObject(bucketName, objectName, file.getInputStream(), objectMetadata);
+
+            String uploadedImageUrl = String.format("%s/%s/%s", endPoint, bucketName, URLEncoder.encode(objectName, "UTF-8").replace("+", "%20"));
+            AccessControlList accessControlList = s3.getObjectAcl(bucketName, objectName);
+            accessControlList.grantPermission(GroupGrantee.AllUsers, Permission.Read);
+
+            s3.setObjectAcl(bucketName, objectName, accessControlList);
+            User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+            user.setImage(uploadedImageUrl);
+            userRepository.save(user);
+
+            return uploadedImageUrl;
+
+        }catch(IOException | AmazonS3Exception e) {
+            throw new RuntimeException("Error uploading the image!", e);
+        }
+
     }
 
 }
