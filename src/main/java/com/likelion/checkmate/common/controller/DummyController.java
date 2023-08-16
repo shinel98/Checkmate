@@ -1,6 +1,5 @@
 package com.likelion.checkmate.common.controller;
 
-import com.likelion.checkmate.follow.application.FollowService;
 import com.likelion.checkmate.follow.domain.entity.Follow;
 import com.likelion.checkmate.follow.domain.repository.FollowRepository;
 import com.likelion.checkmate.hashtag.domain.entity.Hashtag;
@@ -9,7 +8,6 @@ import com.likelion.checkmate.have.domain.entity.Have;
 import com.likelion.checkmate.have.domain.repository.HaveRepository;
 import com.likelion.checkmate.item.domain.entity.Item;
 import com.likelion.checkmate.item.domain.repository.ItemRepository;
-import com.likelion.checkmate.post.application.service.PostService;
 import com.likelion.checkmate.post.domain.entity.Post;
 import com.likelion.checkmate.post.domain.repository.PostRepository;
 import com.likelion.checkmate.report.domain.entity.Report;
@@ -18,11 +16,9 @@ import com.likelion.checkmate.subtopic.domain.entity.Subtopic;
 import com.likelion.checkmate.subtopic.domain.repository.SubtopicRepository;
 import com.likelion.checkmate.together.domain.entity.Together;
 import com.likelion.checkmate.together.domain.repository.TogetherRepository;
-import com.likelion.checkmate.user.application.UserService.UserService;
 import com.likelion.checkmate.user.domain.entity.User;
 import com.likelion.checkmate.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
