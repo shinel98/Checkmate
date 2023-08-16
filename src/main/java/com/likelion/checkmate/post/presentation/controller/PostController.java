@@ -7,6 +7,7 @@ import com.likelion.checkmate.post.application.service.PostService;
 import com.likelion.checkmate.post.domain.entity.Post;
 import com.likelion.checkmate.post.presentation.request.PostDeleteRequest;
 import com.likelion.checkmate.post.presentation.request.PostRequest;
+import com.likelion.checkmate.post.presentation.request.PostScopeChangeRequest;
 import com.likelion.checkmate.post.presentation.response.PostDetailResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -76,6 +77,12 @@ public class PostController {
         }
         return ResponseEntity.ok(postService.search(keyword));
 
+    }
+
+    @PatchMapping("/post/{postId}")
+    public ResponseEntity<Void> changePostScope(@RequestBody PostScopeChangeRequest request) {
+        postService.changePostScope(request.getPostId(), request.getScope());
+        return ResponseEntity.ok().build();
     }
 
 
