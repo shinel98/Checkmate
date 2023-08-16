@@ -4,6 +4,7 @@ package com.likelion.checkmate.auth.controller;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.likelion.checkmate.auth.request.LoginRequest;
 import com.likelion.checkmate.jwt.*;
 import com.likelion.checkmate.user.application.UserService.UserService;
 import com.likelion.checkmate.user.application.dto.UserJwtDto;
@@ -21,6 +22,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 
+@CrossOrigin(
+        origins = "${custom.origin.allowed}",
+        allowedHeaders = "POST, GET, DELETE, PATCH, OPTIONS",
+        allowCredentials = "true")
 @RestController
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
@@ -32,7 +37,9 @@ public class AuthController {
     @GetMapping("/login")
     public ResponseEntity<UserJwtDto> kakaoCallback(@RequestParam String code) {
         HashMap<String, Object> userInfo;
+//        System.out.println("code = " + request.getCode());
         System.out.println("code = " + code);
+//        String accessToken = getKakaoAccessToken(request.getCode());
         String accessToken = getKakaoAccessToken(code);
         userInfo = getUserInfo(accessToken);
         System.out.println("userInfo = " + userInfo);

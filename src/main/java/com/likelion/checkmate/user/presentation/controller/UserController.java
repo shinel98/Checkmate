@@ -1,6 +1,7 @@
 package com.likelion.checkmate.user.presentation.controller;
 
 
+import com.amazonaws.Response;
 import com.likelion.checkmate.user.application.UserService.UserService;
 import com.likelion.checkmate.user.application.dto.MyPageDto;
 import com.likelion.checkmate.user.application.dto.UserDto;
@@ -10,6 +11,7 @@ import com.likelion.checkmate.user.presentation.response.MyPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,4 +43,12 @@ public class UserController {
         MyPageResponse response = MyPageResponse.toResponse(userService.readMyPage(userId));
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/user/image")
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file , @RequestParam Long userId) {
+        String imageUrl = userService.saveImage(file, userId);
+        return ResponseEntity.ok(imageUrl);
+    }
+
+
 }

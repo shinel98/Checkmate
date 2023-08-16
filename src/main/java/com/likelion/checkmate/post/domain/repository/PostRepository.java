@@ -42,5 +42,14 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             "AND p.scope = 3")
     List<Post> findPostsByTitleOrHashTag(String keyword);
 
+//
+//    @Query("SELECT p.*
+//    FROM Post p
+//    LEFT JOIN Hashtag h ON p.id = h.post.id
+//    WHERE p.title IN (SELECT value FROM string_split(:keywords, ','))
+//    OR h.name IN (SELECT value FROM string_split(:keywords, ','))
+//    AND p.scope = 3
+//    List<Post> findPostsByTitleOrHashTag(String keyword);
+
 
 }
